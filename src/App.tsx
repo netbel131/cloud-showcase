@@ -11,8 +11,7 @@ import {
   DollarSign,
    Server,
   Activity,
-  GraduationCap,
-  Calendar
+  GraduationCap
  } from "lucide-react";
 
 /* -------------------- Simple Card wrapper -------------------- */
