@@ -1,1 +1,25 @@
+/* Enable Tailwind v4 layers */
 @import "tailwindcss";
+
+/* --- Print only the open modal area --- */
+@media print {
+  /* hide everything by default */
+  body * { visibility: hidden !important; }
+
+  /* show the modal overlay and its contents */
+  .print-area, .print-area * { visibility: visible !important; }
+
+  /* flatten overlay for clean PDF */
+  .print-area {
+    position: static !important;
+    inset: auto !important;
+    padding: 0 !important;
+    background: white !important;
+  }
+
+  /* remove shadows/borders for the printed card */
+  .print-area > div {
+    box-shadow: none !important;
+    border: none !important;
+  }
+}

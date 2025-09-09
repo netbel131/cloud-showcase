@@ -26,15 +26,6 @@ const Card = ({
   </div>
 );
 
-/* Utility to print current modal content and name the PDF */
-function printWithTitle(title: string) {
-  const prev = document.title;
-  document.title = title;
-  window.print();
-  // reset title shortly after print dialog opens
-  setTimeout(() => (document.title = prev), 1200);
-}
-
 /* -------------------- Modals -------------------- */
 const AwsCostModal = ({
   open,
@@ -44,30 +35,19 @@ const AwsCostModal = ({
   onClose: () => void;
 }) => {
   if (!open) return null;
-  const handlePrint = () =>
-    printWithTitle("AWS-Cost-Optimization-Case-Study");
   return (
-    // NOTE: add "print-area" to the overlay container
-    <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 p-4 overflow-y-auto print-area">
+    <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 p-4 overflow-y-auto">
       <div className="w-full max-w-3xl rounded-2xl bg-white shadow-lg">
         <div className="flex items-center justify-between border-b px-6 py-4">
           <h3 className="text-xl font-semibold">
             AWS Cost Optimization — 30% Savings Case Study
           </h3>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={handlePrint}
-              className="rounded-lg border px-3 py-1 text-sm hover:bg-slate-50"
-            >
-              Export PDF
-            </button>
-            <button
-              onClick={onClose}
-              className="rounded-lg border px-3 py-1 text-sm hover:bg-slate-50"
-            >
-              Close
-            </button>
-          </div>
+          <button
+            onClick={onClose}
+            className="rounded-lg border px-3 py-1 text-sm hover:bg-slate-50"
+          >
+            Close
+          </button>
         </div>
 
         <div className="px-6 py-5 space-y-5 text-slate-700">
@@ -223,28 +203,19 @@ const TimesheetModal = ({
   onClose: () => void;
 }) => {
   if (!open) return null;
-  const handlePrint = () => printWithTitle("Serverless-Timesheet-API");
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 p-4 overflow-y-auto print-area">
+    <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 p-4 overflow-y-auto">
       <div className="w-full max-w-3xl rounded-2xl bg-white shadow-lg">
         <div className="flex items-center justify-between border-b px-6 py-4">
           <h3 className="text-xl font-semibold">
             Serverless Timesheet API — Architecture & Details
           </h3>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={handlePrint}
-              className="rounded-lg border px-3 py-1 text-sm hover:bg-slate-50"
-            >
-              Export PDF
-            </button>
-            <button
-              onClick={onClose}
-              className="rounded-lg border px-3 py-1 text-sm hover:bg-slate-50"
-            >
-              Close
-            </button>
-          </div>
+          <button
+            onClick={onClose}
+            className="rounded-lg border px-3 py-1 text-sm hover:bg-slate-50"
+          >
+            Close
+          </button>
         </div>
 
         <div className="px-6 py-5 space-y-5 text-slate-700">
@@ -254,7 +225,7 @@ const TimesheetModal = ({
             authorizer). IaC + CI/CD deliver fast, zero-downtime deploys.
           </p>
 
-          <div>
+        <div>
             <h4 className="font-semibold">Architecture</h4>
             <ul className="list-disc ml-6 space-y-1">
               <li>
@@ -358,28 +329,19 @@ const IncidentResponseModal = ({
   onClose: () => void;
 }) => {
   if (!open) return null;
-  const handlePrint = () => printWithTitle("Incident-Response-Automation");
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 p-4 overflow-y-auto print-area">
+    <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 p-4 overflow-y-auto">
       <div className="w-full max-w-3xl rounded-2xl bg-white shadow-lg">
         <div className="flex items-center justify-between border-b px-6 py-4">
           <h3 className="text-xl font-semibold">
             Incident Response Automation — EventBridge + Lambda + SSM
           </h3>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={handlePrint}
-              className="rounded-lg border px-3 py-1 text-sm hover:bg-slate-50"
-            >
-              Export PDF
-            </button>
-            <button
-              onClick={onClose}
-              className="rounded-lg border px-3 py-1 text-sm hover:bg-slate-50"
-            >
-              Close
-            </button>
-          </div>
+          <button
+            onClick={onClose}
+            className="rounded-lg border px-3 py-1 text-sm hover:bg-slate-50"
+          >
+            Close
+          </button>
         </div>
 
         <div className="px-6 py-5 space-y-5 text-slate-700">
