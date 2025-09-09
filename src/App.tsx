@@ -49,7 +49,7 @@ export default function App() {
               Projects
             </a>
             <a href="#cases" className="hover:underline">
-              Case Studies
+              Case Studie
             </a>
             <a href="#contact" className="hover:underline">
               Contact
