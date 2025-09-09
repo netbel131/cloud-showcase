@@ -135,6 +135,7 @@ resource "aws_budgets_budget" "monthly_total" {
 
 export default function App() {
   return (
+  const [showAws, setShowAws] = useState(false);
     <div className="min-h-screen bg-gradient-to-b from-white to-slate-50 text-slate-900">
       {/* NAVBAR */}
       <header className="sticky top-0 z-40 backdrop-blur bg-white/70 border-b">
