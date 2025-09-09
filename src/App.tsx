@@ -1,15 +1,13 @@
 import React, { useEffect, useMemo, useState } from "react";
 
-/**
- * Cloud Support Engineer — Showcase Site (Mobile Drawer Nav)
- * - Clean single-file React component
- * - Tailwind CSS styling
- * - Mobile hamburger opens a slide-in drawer with overlay
- */
+// =========================
+// Cloud Support Engineer — Showcase Site (App.jsx)
+// - Ready to paste into src/App.jsx (JavaScript)
+// - Tailwind CSS assumed
+// - Mobile drawer navigation + Case Study PDF downloads
+// =========================
 
-// =========================
-// ======  DATA  ==========
-// =========================
+// ---------- Profile ----------
 const PROFILE = {
   name: "Your Name",
   title: "Cloud Support Engineer | AWS • Azure • DevOps",
@@ -23,6 +21,7 @@ const PROFILE = {
   resumeUrl: "#", // replace with your resume link
 };
 
+// ---------- Hero KPIs ----------
 const METRICS = [
   { label: "MTTR Improvement", value: "↓ 42%" },
   { label: "Monthly Cost Savings", value: "$35K" },
@@ -30,16 +29,10 @@ const METRICS = [
   { label: "Change Success Rate", value: "99.5%" },
 ];
 
-const TAGS = ["All", "AWS", "Azure", "GCP", "Kubernetes", "Terraform", "Observability", "Security"] as const;
+// ---------- Projects ----------
+const TAGS = ["All", "AWS", "Azure", "GCP", "Kubernetes", "Terraform", "Observability", "Security"];
 
-const PROJECTS: Array<{
-  id: string;
-  title: string;
-  summary: string;
-  outcomes: string[];
-  tags: typeof TAGS[number][];
-  links?: { label: string; href: string }[];
-}> = [
+const PROJECTS = [
   {
     id: "p1",
     title: "24/7 Incident Response Playbooks + Automation",
@@ -60,7 +53,7 @@ const PROJECTS: Array<{
     id: "p2",
     title: "Cost Optimization Dashboard (Athena + QuickSight)",
     summary:
-      "Centralized cost & usage insights across accounts. Added anomaly detection and actionable recommendations for RI/Savings Plans.",
+      "Centralized cost & usage insights across accounts. Added anomaly detection and recommendations for RI/Savings Plans.",
     outcomes: [
       "Realized $420K annualized savings",
       "30% EBS snapshot reduction via lifecycle policies",
@@ -85,7 +78,7 @@ const PROJECTS: Array<{
     id: "p4",
     title: "Blueprint: Serverless Timesheet App (API GW → Lambda → DynamoDB)",
     summary:
-      "Built reference workload for support runbooks: canary deploys, feature flags, IaC modules, and chaos tests.",
+      "Reference workload for support runbooks: canary deploys, feature flags, IaC modules, and chaos tests.",
     outcomes: [
       "Zero‑downtime blue/green releases",
       "Unit + integration tests in CI",
@@ -123,6 +116,7 @@ const PROJECTS: Array<{
   },
 ];
 
+// ---------- Case Studies (with PDF download) ----------
 const CASE_STUDIES = [
   {
     id: "c1",
@@ -136,6 +130,7 @@ const CASE_STUDIES = [
       "Storage spend ↓ 33%",
       "On‑call pages/week from 11 → 3",
     ],
+    pdfUrl: "/case-studies/case_study_healthcare_hipaa.pdf", // put PDFs in /public/case-studies/
   },
   {
     id: "c2",
@@ -149,9 +144,11 @@ const CASE_STUDIES = [
       "Zero failed deploys in 90 days",
       "Customer complaints ↓ 72%",
     ],
+    pdfUrl: "/case-studies/case_study_fintech_payments.pdf",
   },
 ];
 
+// ---------- Skills ----------
 const SKILLS = [
   "Incident Management (ITIL)",
   "SRE Practices (SLO/SLA/SLE)",
@@ -173,9 +170,9 @@ const CERTS = [
 ];
 
 // =========================
-// ===== COMPONENTS ========
+// ===== Components =========
 // =========================
-function Section({ id, title, children }: React.PropsWithChildren<{ id?: string; title?: string }>) {
+function Section({ id, title, children }) {
   return (
     <section id={id} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {title && (
@@ -186,7 +183,7 @@ function Section({ id, title, children }: React.PropsWithChildren<{ id?: string;
   );
 }
 
-function KPI({ value, label }: { value: string; label: string }) {
+function KPI({ value, label }) {
   return (
     <div className="rounded-2xl border p-6 shadow-sm bg-white/60 backdrop-blur">
       <div className="text-3xl font-extrabold">{value}</div>
@@ -195,7 +192,7 @@ function KPI({ value, label }: { value: string; label: string }) {
   );
 }
 
-function Pill({ text, active, onClick }: { text: string; active?: boolean; onClick?: () => void }) {
+function Pill({ text, active, onClick }) {
   return (
     <button
       onClick={onClick}
@@ -208,7 +205,7 @@ function Pill({ text, active, onClick }: { text: string; active?: boolean; onCli
   );
 }
 
-function ProjectCard({ p }: { p: typeof PROJECTS[number] }) {
+function ProjectCard({ p }) {
   return (
     <div className="rounded-2xl border p-6 shadow-sm bg-white/70 backdrop-blur hover:shadow-md transition">
       <h3 className="text-xl font-semibold">{p.title}</h3>
@@ -219,7 +216,7 @@ function ProjectCard({ p }: { p: typeof PROJECTS[number] }) {
         ))}
       </ul>
       <div className="mt-4 flex flex-wrap gap-2">
-        {p.tags.filter(t => t !== "All").map((t, i) => (
+        {p.tags.filter((t) => t !== "All").map((t, i) => (
           <span key={i} className="px-2 py-1 text-xs rounded-full border bg-gray-50">
             {t}
           </span>
@@ -238,11 +235,20 @@ function ProjectCard({ p }: { p: typeof PROJECTS[number] }) {
   );
 }
 
-function CaseStudy({ c }: { c: typeof CASE_STUDIES[number] }) {
+function CaseStudy({ c }) {
   return (
     <details className="rounded-2xl border p-6 shadow-sm bg-white/70 backdrop-blur">
-      <summary className="cursor-pointer text-lg font-semibold">
-        {c.customer}
+      <summary className="cursor-pointer text-lg font-semibold flex justify-between items-center">
+        <span>{c.customer}</span>
+        {c.pdfUrl && (
+          <a
+            href={c.pdfUrl}
+            download
+            className="ml-4 text-sm px-3 py-1 rounded-full border hover:bg-gray-100"
+          >
+            Download PDF
+          </a>
+        )}
       </summary>
       <div className="mt-3 grid md:grid-cols-3 gap-4">
         <div>
@@ -267,10 +273,10 @@ function CaseStudy({ c }: { c: typeof CASE_STUDIES[number] }) {
 }
 
 // =========================
-// ===== MAIN VIEW =========
+// ========== App ==========
 // =========================
-export default function CloudSupportShowcase() {
-  const [activeTag, setActiveTag] = useState<typeof TAGS[number]>("All");
+export default function App() {
+  const [activeTag, setActiveTag] = useState("All");
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const filtered = useMemo(() => {
@@ -278,31 +284,18 @@ export default function CloudSupportShowcase() {
     return PROJECTS.filter((p) => p.tags.includes(activeTag));
   }, [activeTag]);
 
-  // Lock body scroll when drawer open
+  // Lock scroll when drawer open
   useEffect(() => {
-    if (drawerOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
+    document.body.style.overflow = drawerOpen ? "hidden" : "";
+    return () => (document.body.style.overflow = "");
   }, [drawerOpen]);
 
   // Close on ESC
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setDrawerOpen(false);
-    };
+    const onKey = (e) => e.key === "Escape" && setDrawerOpen(false);
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
-
-  const closeAnd = (fn?: () => void) => () => {
-    setDrawerOpen(false);
-    if (fn) fn();
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 text-gray-900">
@@ -310,7 +303,6 @@ export default function CloudSupportShowcase() {
       <header className="sticky top-0 z-30 backdrop-blur bg-white/70 border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <a href="#home" className="font-bold tracking-tight">{PROFILE.name}</a>
-
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-6 text-sm">
             <a href="#projects" className="hover:underline">Projects</a>
@@ -319,7 +311,6 @@ export default function CloudSupportShowcase() {
             <a href="#contact" className="hover:underline">Contact</a>
             <a href={PROFILE.resumeUrl} className="px-3 py-1.5 rounded-full border hover:shadow">Download Résumé</a>
           </nav>
-
           {/* Mobile Hamburger */}
           <button
             className="md:hidden flex flex-col gap-1.5"
@@ -334,16 +325,12 @@ export default function CloudSupportShowcase() {
       </header>
 
       {/* Drawer + Overlay */}
-      {/* Overlay */}
       <div
         className={`fixed inset-0 z-40 transition ${drawerOpen ? "visible" : "invisible"}`}
         onClick={() => setDrawerOpen(false)}
       >
-        <div
-          className={`absolute inset-0 bg-black/30 transition-opacity ${drawerOpen ? "opacity-100" : "opacity-0"}`}
-        />
+        <div className={`absolute inset-0 bg-black/30 transition-opacity ${drawerOpen ? "opacity-100" : "opacity-0"}`} />
       </div>
-      {/* Panel */}
       <aside
         className={`fixed right-0 top-0 h-full w-72 bg-white z-50 border-l shadow-xl transform transition-transform duration-300 ${
           drawerOpen ? "translate-x-0" : "translate-x-full"
@@ -353,16 +340,14 @@ export default function CloudSupportShowcase() {
       >
         <div className="h-16 flex items-center justify-between px-4 border-b">
           <span className="font-semibold">Menu</span>
-          <button aria-label="Close navigation" onClick={() => setDrawerOpen(false)} className="p-2 rounded hover:bg-gray-100">
-            ✕
-          </button>
+          <button aria-label="Close navigation" onClick={() => setDrawerOpen(false)} className="p-2 rounded hover:bg-gray-100">✕</button>
         </div>
         <nav className="p-4 flex flex-col gap-3 text-sm">
-          <a href="#projects" onClick={closeAnd()} className="px-3 py-2 rounded hover:bg-gray-50">Projects</a>
-          <a href="#case-studies" onClick={closeAnd()} className="px-3 py-2 rounded hover:bg-gray-50">Case Studies</a>
-          <a href="#skills" onClick={closeAnd()} className="px-3 py-2 rounded hover:bg-gray-50">Skills</a>
-          <a href="#contact" onClick={closeAnd()} className="px-3 py-2 rounded hover:bg-gray-50">Contact</a>
-          <a href={PROFILE.resumeUrl} onClick={closeAnd()} className="mt-2 px-3 py-2 rounded border text-center">Download Résumé</a>
+          <a href="#projects" onClick={() => setDrawerOpen(false)} className="px-3 py-2 rounded hover:bg-gray-50">Projects</a>
+          <a href="#case-studies" onClick={() => setDrawerOpen(false)} className="px-3 py-2 rounded hover:bg-gray-50">Case Studies</a>
+          <a href="#skills" onClick={() => setDrawerOpen(false)} className="px-3 py-2 rounded hover:bg-gray-50">Skills</a>
+          <a href="#contact" onClick={() => setDrawerOpen(false)} className="px-3 py-2 rounded hover:bg-gray-50">Contact</a>
+          <a href={PROFILE.resumeUrl} onClick={() => setDrawerOpen(false)} className="mt-2 px-3 py-2 rounded border text-center">Download Résumé</a>
           <div className="mt-4 text-xs text-gray-500 px-3">{PROFILE.location} • {PROFILE.email}</div>
         </nav>
       </aside>
@@ -371,24 +356,14 @@ export default function CloudSupportShowcase() {
       <Section id="home">
         <div className="grid md:grid-cols-5 gap-8 items-center">
           <div className="md:col-span-3">
-            <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight">
-              {PROFILE.title}
-            </h1>
+            <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight">{PROFILE.title}</h1>
             <p className="mt-4 text-lg text-gray-700">{PROFILE.blurb}</p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <a href="#projects" className="px-4 py-2 rounded-xl bg-black text-white">
-                View Projects
-              </a>
-              <a href={PROFILE.linkedin} className="px-4 py-2 rounded-xl border">
-                LinkedIn
-              </a>
-              <a href={PROFILE.github} className="px-4 py-2 rounded-xl border">
-                GitHub
-              </a>
+              <a href="#projects" className="px-4 py-2 rounded-xl bg-black text-white">View Projects</a>
+              <a href={PROFILE.linkedin} className="px-4 py-2 rounded-xl border">LinkedIn</a>
+              <a href={PROFILE.github} className="px-4 py-2 rounded-xl border">GitHub</a>
             </div>
-            <div className="mt-4 text-sm text-gray-600">
-              {PROFILE.location} • {PROFILE.email} • {PROFILE.phone}
-            </div>
+            <div className="mt-4 text-sm text-gray-600">{PROFILE.location} • {PROFILE.email} • {PROFILE.phone}</div>
           </div>
           <div className="md:col-span-2 grid grid-cols-2 gap-4">
             {METRICS.map((m, i) => (
@@ -436,9 +411,7 @@ export default function CloudSupportShowcase() {
             <h3 className="font-semibold">Stacks & Platforms</h3>
             <div className="mt-3 flex flex-wrap gap-2">
               {BADGES.map((b, i) => (
-                <span key={i} className="px-3 py-1.5 rounded-full border bg-gray-50 text-sm">
-                  {b}
-                </span>
+                <span key={i} className="px-3 py-1.5 rounded-full border bg-gray-50 text-sm">{b}</span>
               ))}
             </div>
             <h3 className="mt-6 font-semibold">Certifications</h3>
@@ -454,28 +427,17 @@ export default function CloudSupportShowcase() {
       {/* Contact */}
       <Section id="contact" title="Contact">
         <div className="rounded-2xl border p-8 bg-white/70 backdrop-blur">
-          <p className="text-gray-800">
-            Interested in reliability audits, on‑call process improvements, or cost
-            optimization workshops? I’m happy to help.
-          </p>
+          <p className="text-gray-800">Interested in reliability audits, on‑call process improvements, or cost optimization workshops? I’m happy to help.</p>
           <div className="mt-4 flex flex-wrap gap-3">
-            <a href={`mailto:${PROFILE.email}`} className="px-4 py-2 rounded-xl bg-black text-white">
-              Email Me
-            </a>
-            <a href={PROFILE.resumeUrl} className="px-4 py-2 rounded-xl border">
-              Download Résumé
-            </a>
-            <a href={PROFILE.linkedin} className="px-4 py-2 rounded-xl border">
-              LinkedIn
-            </a>
+            <a href={`mailto:${PROFILE.email}`} className="px-4 py-2 rounded-xl bg-black text-white">Email Me</a>
+            <a href={PROFILE.resumeUrl} className="px-4 py-2 rounded-xl border">Download Résumé</a>
+            <a href={PROFILE.linkedin} className="px-4 py-2 rounded-xl border">LinkedIn</a>
           </div>
         </div>
       </Section>
 
       {/* Footer */}
-      <footer className="py-10 text-center text-sm text-gray-600">
-        © {new Date().getFullYear()} {PROFILE.name}. All rights reserved.
-      </footer>
+      <footer className="py-10 text-center text-sm text-gray-600">© {new Date().getFullYear()} {PROFILE.name}. All rights reserved.</footer>
     </div>
   );
 }
