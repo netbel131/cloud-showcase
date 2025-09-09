@@ -509,6 +509,8 @@ export default function App() {
               <li>Containers (EKS, AKS)</li>
               <li>CI/CD (GitHub Actions)</li>
               <li>Terraform & IaC</li>
+			  <li>AWS Certified Solutions Architect Associate </li>
+			  <li>Microsoft Certified: Azure Administrator Associate</li>
             </ul>
           </Card>
           <Card>
