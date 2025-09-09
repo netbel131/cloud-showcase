@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
   Cloud,
@@ -237,6 +237,9 @@ export default function App() {
             <p className="text-sm text-slate-600 mt-1">
               Cut monthly spend ~30% using RI/Savings Plans, S3 lifecycle,
               EBS cleanup, CloudFront caching.
+			  <h4 className="font-semibold text-lg">AWS Cost Optimization</h4>
+<p className="text-sm text-slate-600 mt-1">Cut monthly spend ~30% ...</p>
+
             </p>
           </Card>
           <Card>
