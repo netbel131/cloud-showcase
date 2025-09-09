@@ -1,59 +1,22 @@
-/* ===========================
-   Tailwind v4 entrypoint
-   =========================== */
-@import "tailwindcss";
+/* =========================================
+   Tailwind base layers
+   ========================================= */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/* If you're on Tailwind v3, replace the line above with:
-   @tailwind base;
-   @tailwind components;
-   @tailwind utilities;
-*/
-
-/* ===========================
-   CSS Variables (theme tweaks)
-   =========================== */
-:root {
-  --app-bg: 255 255 255;      /* white */
-  --app-fg: 17 24 39;         /* gray-900 */
-  --muted-fg: 75 85 99;       /* gray-600 */
-  --ring: 59 130 246;         /* blue-500 */
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --app-bg: 17 24 39;       /* gray-900 */
-    --app-fg: 243 244 246;    /* gray-100 */
-    --muted-fg: 156 163 175;  /* gray-400 */
-  }
-}
-
-/* ===========================
-   Base resets & typography
-   =========================== */
-html {
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
-  scroll-behavior: smooth;
-}
-
+/* =========================================
+   Global resets & typography tweaks
+   ========================================= */
 html, body, #root {
   height: 100%;
 }
 
 body {
+  @apply bg-gray-50 text-gray-900 antialiased;
   margin: 0;
-  color: rgb(var(--app-fg));
-  background: rgb(var(--app-bg));
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue",
-               Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-img, svg, video, canvas {
-  display: block;
-  max-width: 100%;
-  height: auto;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial,
+    "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 a {
@@ -64,33 +27,30 @@ a:hover {
   text-decoration: underline;
 }
 
-button {
-  background: transparent;
-  border: 0;
-  cursor: pointer;
+img, svg, video, canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
 }
 
-/* Focus ring (accessible) */
-:focus-visible {
-  outline: 2px solid rgb(var(--ring));
-  outline-offset: 2px;
-}
-
-/* Selection color */
+/* Selection highlight */
 ::selection {
   background: rgba(59, 130, 246, 0.2); /* blue-500/20 */
 }
 
-/* ===========================
-   Layout helpers
-   =========================== */
-.container-narrow {
-  max-width: 72rem; /* ~1152px */
-  margin-inline: auto;
-  padding-inline: 1rem;
+/* Focus outline */
+:focus-visible {
+  outline: 2px solid rgb(59 130 246); /* blue-500 */
+  outline-offset: 2px;
 }
 
-/* Smooth card shadow for light/dark */
+/* =========================================
+   Utility classes (optional helpers)
+   ========================================= */
+.container-narrow {
+  @apply max-w-6xl mx-auto px-4;
+}
+
 .card {
   @apply rounded-2xl border bg-white/70 backdrop-blur shadow-sm;
 }
@@ -100,17 +60,8 @@ button {
   }
 }
 
-/* Subtle text */
-.muted {
-  color: rgb(var(--muted-fg));
-}
-
-/* ===========================
-   Buttons
-   =========================== */
 .btn {
-  @apply inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-medium transition;
-  @apply border border-gray-300 hover:shadow;
+  @apply inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-medium transition border border-gray-300 hover:shadow;
 }
 .btn-primary {
   @apply bg-black text-white hover:opacity-90;
@@ -124,7 +75,6 @@ button {
   }
 }
 
-/* Small pill / chip */
 .chip {
   @apply inline-flex items-center rounded-full border px-2 py-1 text-xs bg-gray-50;
 }
@@ -134,9 +84,9 @@ button {
   }
 }
 
-/* ===========================
+/* =========================================
    Animations
-   =========================== */
+   ========================================= */
 @keyframes fade-in {
   from { opacity: 0; transform: translateY(4px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -145,43 +95,9 @@ button {
   animation: fade-in 200ms ease-out both;
 }
 
-/* Drawer slide-in (used by mobile menu) */
-@keyframes slide-in-right {
-  from { transform: translateX(100%); }
-  to   { transform: translateX(0%); }
-}
-@keyframes slide-out-right {
-  from { transform: translateX(0%); }
-  to   { transform: translateX(100%); }
-}
-/* Use utility classes for state; these are here if you prefer CSS classes */
-.drawer-enter { animation: slide-in-right 300ms ease-out both; }
-.drawer-exit  { animation: slide-out-right 300ms ease-in both; }
-
-/* ===========================
-   Scrollbar (WebKit/Chromium)
-   =========================== */
-*::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-*::-webkit-scrollbar-track {
-  background: transparent;
-}
-*::-webkit-scrollbar-thumb {
-  background-color: rgba(0,0,0,0.15);
-  border-radius: 999px;
-}
-@media (prefers-color-scheme: dark) {
-  *::-webkit-scrollbar-thumb {
-    background-color: rgba(255,255,255,0.2);
-  }
-}
-
-/* ===========================
-   Print only the open modal area
-   (your request)
-   =========================== */
+/* =========================================
+   Print styles – only print modal area
+   ========================================= */
 @media print {
   /* Hide everything by default */
   body * {
