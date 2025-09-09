@@ -204,7 +204,7 @@ export default function App() {
           <ul className="space-y-2">
             <li>
               <a
-                href="https://github.com/your-handle"
+                href="https://github.com/netbel131"
                 target="_blank"
                 className="flex items-center gap-2 text-sky-600"
               >
@@ -222,7 +222,7 @@ export default function App() {
             </li>
             <li>
               <a
-                href="netsanet@netbel.solutions"
+                href="mailto:netsanet@netbel.solutions"
                 className="flex items-center gap-2 text-sky-600"
               >
                 <Mail className="h-4 w-4" /> you@example.com
