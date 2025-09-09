@@ -213,7 +213,7 @@ export default function App() {
             </li>
             <li>
               <a
-                href="https://linkedin.com/in/your-handle"
+                href="https://linkedin.com/in/netbel"
                 target="_blank"
                 className="flex items-center gap-2 text-sky-600"
               >
