@@ -222,7 +222,7 @@ export default function App() {
             </li>
             <li>
               <a
-                href="mailto:you@example.com"
+                href="netsanet@netbel.solutions"
                 className="flex items-center gap-2 text-sky-600"
               >
                 <Mail className="h-4 w-4" /> you@example.com
