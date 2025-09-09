@@ -9,9 +9,11 @@ import {
   Mail,
   FileDown,
   DollarSign,
-  Server,
+   Server,
   Activity,
-} from "lucide-react";
+  GraduationCap,
+  Calendar
+ } from "lucide-react";
 
 /* -------------------- Simple Card wrapper -------------------- */
 const Card = ({
@@ -518,6 +520,7 @@ export default function App() {
             <a href="#skills" className="hover:underline">Skills</a>
             <a href="#projects" className="hover:underline">Projects</a>
             <a href="#cases" className="hover:underline">Case Studies</a>
+			<a href="#education" className="hover:underline">Education</a>
             <a href="#contact" className="hover:underline">Contact</a>
             <a href="#resume" className="px-3 py-1 rounded-2xl bg-sky-600 text-white">Resume</a>
           </div>
@@ -568,6 +571,41 @@ export default function App() {
           </Card>
         </div>
       </section>
+{/* EDUCATION */}
+<section id="education" className="max-w-6xl mx-auto px-4 py-14">
+  <h2 className="text-3xl font-bold mb-6">Education</h2>
+
+  <div className="grid md:grid-cols-2 gap-6">
+    <Card>
+      <h3 className="font-semibold text-xl flex items-center gap-2">
+        <GraduationCap className="h-5 w-5" /> Master of Science — Cloud Computing
+      </h3>
+      <p className="mt-1 text-slate-600">
+        <strong>University:</strong> <span>University Of MarylanGlobal Compass </span><br/>
+        <strong>Status:</strong> In progress<br/>
+        <strong>Expected Graduation:</strong> May 2026
+      </p>
+      <ul className="mt-3 list-disc ml-6 text-slate-600 text-sm">
+        <li>Focus: AWS, Azure, Serverless, DevOps, FinOps</li>
+        <li>Capstone: Cost-aware multi-cloud architecture</li>
+      </ul>
+    </Card>
+
+    <Card>
+      <h3 className="font-semibold text-xl flex items-center gap-2">
+        <GraduationCap className="h-5 w-5" /> Bachelor Degree — Computer Science
+      </h3>
+      <p className="mt-1 text-slate-600">
+        <strong>University:</strong> <span>Hilcoe School OF Computer Science and Technology</span><br/>
+        
+      </p>
+      <ul className="mt-3 list-disc ml-6 text-slate-600 text-sm">
+        <li>Relevant coursework: Networking, Systems Admin, Databases</li>
+        <li>Senior Project: Automated ticketing integrations</li>
+      </ul>
+    </Card>
+  </div>
+</section>
 
       {/* PROJECTS */}
       <section id="projects" className="max-w-6xl mx-auto px-4 py-14">
@@ -629,51 +667,115 @@ export default function App() {
       </section>
 
       {/* RESUME & CONTACT */}
-      <section id="resume" className="max-w-6xl mx-auto px-4 py-14">
-        <h2 className="text-3xl font-bold mb-6">Resume & Contact</h2>
-        <Card>
-          <h4 className="font-semibold text-lg mb-2">Download Resume</h4>
-          <a
-            href="/resume.pdf"
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 px-3 py-2 rounded-2xl bg-sky-600 text-white"
-          >
-            <FileDown className="h-4 w-4" /> Resume (PDF)
-          </a>
-        </Card>
-        <Card className="mt-6">
-          <h4 className="font-semibold text-lg mb-2">Links</h4>
-          <ul className="space-y-2">
-            <li>
-              <a
-                href="https://github.com/your-handle"
-                target="_blank"
-                className="flex items-center gap-2 text-sky-600"
-              >
-                <Github className="h-4 w-4" /> GitHub
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://linkedin.com/in/your-handle"
-                target="_blank"
-                className="flex items-center gap-2 text-sky-600"
-              >
-                <Linkedin className="h-4 w-4" /> LinkedIn
-              </a>
-            </li>
-            <li>
-              <a
-                href="mailto:you@example.com"
-                className="flex items-center gap-2 text-sky-600"
-              >
-                <Mail className="h-4 w-4" /> you@example.com
-              </a>
-            </li>
-          </ul>
-        </Card>
-      </section>
+ {/* RESUME & CONTACT */}
+<section id="contact" className="max-w-6xl mx-auto px-4 py-14">
+  <h2 className="text-3xl font-bold mb-6">Resume & Contact</h2>
+
+  {/* Resume card */}
+  <div className="rounded-2xl border shadow-sm bg-white p-6">
+    <h4 className="font-semibold text-lg mb-2">Download Resume</h4>
+    <a
+      href="/resume.pdf"
+      target="_blank"
+      rel="noreferrer"
+      download
+      className="inline-flex items-center gap-2 px-3 py-2 rounded-2xl bg-sky-600 text-white"
+      title="Open or Save PDF"
+    >
+      <FileDown className="h-4 w-4" /> Resume (PDF)
+    </a>
+    <p className="text-sm text-slate-500 mt-2">
+      Tip: keep the filename simple like <code>resume.pdf</code> so the link never breaks.
+    </p>
+  </div>
+
+  {/* Contact links */}
+  <div className="rounded-2xl border shadow-sm bg-white p-6 mt-6">
+    <h4 className="font-semibold text-lg mb-2">Contact</h4>
+    <ul className="space-y-2">
+      <li>
+        <a
+          href="mailto:netsanet@netbel.solutions?subject=Hello%20Netsanet&body=Hi%20Net%2C%20I%27d%20like%20to%20connect..."
+          className="flex items-center gap-2 text-sky-600"
+        >
+          <Mail className="h-4 w-4" /> netsanet@netbel.solutions
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://github.com/netbel131"
+          target="_blank"
+          rel="noreferrer"
+          className="flex items-center gap-2 text-sky-600"
+        >
+          <Github className="h-4 w-4" /> github.com/netbel131
+        </a>
+      </li>
+      <li>
+        <a
+          href="https://linkedin.com/in/your-handle"
+          target="_blank"
+          rel="noreferrer"
+          className="flex items-center gap-2 text-sky-600"
+        >
+          <Linkedin className="h-4 w-4" /> linkedin.com/in/your-handle
+        </a>
+      </li>
+      <li>
+        <a href="tel:301.9685249" className="flex items-center gap-2 text-sky-600">
+          {/* you can swap icon if you like; lucide-react also has a Phone icon */}
+          📞 (###) ###-####
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  {/* Optional: simple contact form (no backend) using FormSubmit */}
+  <div className="rounded-2xl border shadow-sm bg-white p-6 mt-6">
+    <h4 className="font-semibold text-lg mb-3">Send a message</h4>
+    <form
+      action="https://formsubmit.co/YOUR_EMAIL_HERE"
+      method="POST"
+      className="space-y-3"
+    >
+      {/* FormSubmit options */}
+      <input type="hidden" name="_subject" value="Portfolio contact" />
+      <input type="hidden" name="_captcha" value="false" />
+      <input type="hidden" name="_next" value="https://YOUR-DOMAIN/thanks.html" />
+
+      <div className="grid md:grid-cols-2 gap-3">
+        <input
+          className="w-full rounded-xl border px-3 py-2"
+          name="name"
+          placeholder="Your name"
+          required
+        />
+        <input
+          className="w-full rounded-xl border px-3 py-2"
+          type="email"
+          name="email"
+          placeholder="Your email"
+          required
+        />
+      </div>
+      <textarea
+        className="w-full rounded-xl border px-3 py-2"
+        name="message"
+        rows={5}
+        placeholder="How can I help?"
+        required
+      />
+      <button
+        type="submit"
+        className="rounded-2xl border px-4 py-2 text-sm hover:bg-slate-50"
+      >
+        Send
+      </button>
+      <p className="text-xs text-slate-500">Powered by formsubmit.co — no backend needed.</p>
+    </form>
+  </div>
+</section>
+
 
       {/* Render modals */}
       <AwsCostModal open={showAws} onClose={() => setShowAws(false)} />
