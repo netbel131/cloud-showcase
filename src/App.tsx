@@ -27,6 +27,111 @@ const Card = ({
     {children}
   </div>
 );
+import React, { useState } from "react";
+
+const AwsCostModal = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
+  if (!open) return null;
+  return (
+    <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 p-4 overflow-y-auto">
+      <div className="w-full max-w-3xl rounded-2xl bg-white shadow-lg">
+        <div className="flex items-center justify-between border-b px-6 py-4">
+          <h3 className="text-xl font-semibold">AWS Cost Optimization — 30% Savings Case Study</h3>
+          <button onClick={onClose} className="rounded-lg border px-3 py-1 text-sm hover:bg-slate-50">Close</button>
+        </div>
+
+        <div className="px-6 py-5 space-y-5 text-slate-700">
+          <p><strong>Summary:</strong> Reduced monthly AWS spend ~30% without downtime by right-sizing compute, adopting Savings Plans, moving storage to cheaper tiers, and optimizing CDN/data transfer. Built visibility with CUR→Athena→QuickSight, Budgets, and anomaly alerts.</p>
+
+          <div>
+            <h4 className="font-semibold">Environment</h4>
+            <ul className="list-disc ml-6">
+              <li>Multi-account (dev/test/prod); EC2/ECS, Lambda, RDS, S3, CloudFront</li>
+              <li>Tooling: Cost Explorer, Compute Optimizer, Trusted Advisor, CUR→Athena/QuickSight, Terraform</li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-semibold">Key Actions</h4>
+            <ul className="list-disc ml-6 space-y-1">
+              <li><strong>Compute:</strong> Right-size + move to Graviton; apply <em>Compute Savings Plans</em>; use Spot & autoscaling for batch/stateless; shut down dev after hours.</li>
+              <li><strong>Storage:</strong> EBS <code>gp2→gp3</code>; S3 Intelligent-Tiering + lifecycle to Glacier; snapshot & AMI cleanup.</li>
+              <li><strong>Databases:</strong> Right-size RDS; reserved capacity for steady prod; tune connections/indexes.</li>
+              <li><strong>Network/CDN:</strong> CloudFront caching rules, compression, Origin Shield; VPC endpoints to cut NAT data.</li>
+              <li><strong>Governance:</strong> Mandatory tagging; Budgets + Anomaly Detection; EventBridge cleanups.</li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-semibold">Before vs After (illustrative)</h4>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm border">
+                <thead className="bg-slate-50">
+                  <tr>
+                    <th className="border px-3 py-2 text-left">Category</th>
+                    <th className="border px-3 py-2 text-right">Baseline</th>
+                    <th className="border px-3 py-2 text-right">After</th>
+                    <th className="border px-3 py-2 text-right">Savings</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td className="border px-3 py-2">Compute (EC2/ECS)</td><td className="border px-3 py-2 text-right">$50,000</td><td className="border px-3 py-2 text-right">$34,000</td><td className="border px-3 py-2 text-right">$16,000</td></tr>
+                  <tr><td className="border px-3 py-2">Storage (S3/EBS)</td><td className="border px-3 py-2 text-right">$20,000</td><td className="border px-3 py-2 text-right">$13,000</td><td className="border px-3 py-2 text-right">$7,000</td></tr>
+                  <tr><td className="border px-3 py-2">Databases (RDS)</td><td className="border px-3 py-2 text-right">$15,000</td><td className="border px-3 py-2 text-right">$11,000</td><td className="border px-3 py-2 text-right">$4,000</td></tr>
+                  <tr><td className="border px-3 py-2">Data Transfer/CDN</td><td className="border px-3 py-2 text-right">$10,000</td><td className="border px-3 py-2 text-right">$7,000</td><td className="border px-3 py-2 text-right">$3,000</td></tr>
+                  <tr className="font-semibold"><td className="border px-3 py-2">Total</td><td className="border px-3 py-2 text-right">$100,000</td><td className="border px-3 py-2 text-right">$70,000</td><td className="border px-3 py-2 text-right">$30,000 (30%)</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div>
+            <h4 className="font-semibold">IaC Samples (Terraform)</h4>
+            <pre className="bg-slate-900 text-slate-100 rounded-lg p-3 text-xs overflow-x-auto">{`# S3 lifecycle to Glacier
+resource "aws_s3_bucket_lifecycle_configuration" "logs" {
+  bucket = aws_s3_bucket.logs.id
+  rule {
+    id     = "logs-to-glacier"
+    status = "Enabled"
+    filter { prefix = "logs/" }
+    transition { days = 30 storage_class = "GLACIER" }
+    expiration { days = 365 }
+  }
+}
+
+# AWS Budget email alert
+resource "aws_budgets_budget" "monthly_total" {
+  name         = "Monthly-Total"
+  budget_type  = "COST"
+  limit_amount = "80000"
+  limit_unit   = "USD"
+  time_unit    = "MONTHLY"
+
+  notification {
+    comparison_operator = "GREATER_THAN"
+    threshold           = 80
+    threshold_type      = "PERCENTAGE"
+    notification_type   = "ACTUAL"
+    subscriber_email_addresses = ["finops@yourco.com","net@yourco.com"]
+  }
+}`}</pre>
+          </div>
+
+          <div>
+            <h4 className="font-semibold">KPIs</h4>
+            <ul className="list-disc ml-6">
+              <li>Savings Plan coverage & utilization</li>
+              <li>Cost by service/app/env (CUR/QuickSight)</li>
+              <li>CloudFront cache hit ratio; NAT data egress</li>
+              <li>EBS gp3 adoption; S3 Glacier bytes; snapshot counts</li>
+            </ul>
+          </div>
+
+          <p className="text-sm text-slate-500">*Replace example numbers with your real Cost Explorer/CUR data when ready.</p>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default function App() {
   return (
