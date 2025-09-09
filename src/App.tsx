@@ -1,10 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { FaLinkedin, FaGithub, FaUniversity, FaEnvelope, FaPhone } from "react-icons/fa";
 
 // =========================
-// Cloud Support Engineer — Showcase Site (App.jsx)
-// - Ready to paste into src/App.jsx (JavaScript)
-// - Tailwind CSS assumed
-// - Mobile drawer navigation + Case Study PDF downloads
+// Cloud Support Engineer — Showcase Site (App.tsx)
 // =========================
 
 // ---------- Profile ----------
@@ -12,17 +10,18 @@ const PROFILE = {
   name: "Your Name",
   title: "Cloud Support Engineer | AWS • Azure • DevOps",
   blurb:
-    "I keep production systems resilient, observable, and cost‑efficient. I troubleshoot incidents, automate fixes, and turn metrics into action.",
+    "I keep production systems resilient, observable, and cost-efficient. I troubleshoot incidents, automate fixes, and turn metrics into action.",
   location: "Alexandria, VA",
   email: "you@example.com",
-  phone: "+1 (555) 123‑4567",
+  phone: "+1 (555) 123-4567",
   linkedin: "https://www.linkedin.com/in/yourprofile",
   github: "https://github.com/yourhandle",
   resumeUrl: "#", // replace with your resume link
+  school: "Your University (Placeholder)",
 };
 
 // ---------- Hero KPIs ----------
-const METRICS = [
+const METRICS: { label: string; value: string }[] = [
   { label: "MTTR Improvement", value: "↓ 42%" },
   { label: "Monthly Cost Savings", value: "$35K" },
   { label: "Incidents Resolved", value: "500+" },
@@ -30,23 +29,42 @@ const METRICS = [
 ];
 
 // ---------- Projects ----------
-const TAGS = ["All", "AWS", "Azure", "GCP", "Kubernetes", "Terraform", "Observability", "Security"];
+type Tag =
+  | "All"
+  | "AWS"
+  | "Azure"
+  | "GCP"
+  | "Kubernetes"
+  | "Terraform"
+  | "Observability"
+  | "Security";
 
-const PROJECTS = [
+const TAGS: Tag[] = ["All", "AWS", "Azure", "GCP", "Kubernetes", "Terraform", "Observability", "Security"];
+
+type Project = {
+  id: string;
+  title: string;
+  summary: string;
+  outcomes: string[];
+  tags: Tag[];
+  links?: { label: string; href: string }[];
+};
+
+const PROJECTS: Project[] = [
   {
     id: "p1",
     title: "24/7 Incident Response Playbooks + Automation",
     summary:
-      "Designed runbooks for Sev‑1 to Sev‑3 with auto‑remediation via Lambda and Azure Functions. Integrated PagerDuty + Slack for on‑call rotations.",
+      "Designed runbooks for Sev-1 to Sev-3 with auto-remediation via Lambda and Azure Functions. Integrated PagerDuty + Slack for on-call rotations.",
     outcomes: [
       "Cut MTTR from 85 → 49 minutes",
-      "Reduced false alerts by 60% using SLO‑based alerting",
+      "Reduced false alerts by 60% using SLO-based alerting",
       "Automated restarts + cache flush for 12 common failure modes",
     ],
     tags: ["All", "AWS", "Azure", "Observability"],
     links: [
       { label: "Runbook Template (PDF)", href: "#" },
-      { label: "Lambda Auto‑Fix POC", href: "#" },
+      { label: "Lambda Auto-Fix POC", href: "#" },
     ],
   },
   {
@@ -57,7 +75,7 @@ const PROJECTS = [
     outcomes: [
       "Realized $420K annualized savings",
       "30% EBS snapshot reduction via lifecycle policies",
-      "Cross‑tag compliance from 62% → 95%",
+      "Cross-tag compliance from 62% → 95%",
     ],
     tags: ["All", "AWS"],
     links: [{ label: "Demo Report", href: "#" }],
@@ -68,7 +86,7 @@ const PROJECTS = [
     summary:
       "Unified metrics, logs, and traces. Mapped golden signals to SLOs and piped logs to OpenSearch for fast RCA.",
     outcomes: [
-      "99.9% SLO met for user‑facing APIs",
+      "99.9% SLO met for user-facing APIs",
       "Query latency P95 reduced from 850ms → 410ms",
       "Playbook MTTK (time to know) ↓ 55%",
     ],
@@ -80,7 +98,7 @@ const PROJECTS = [
     summary:
       "Reference workload for support runbooks: canary deploys, feature flags, IaC modules, and chaos tests.",
     outcomes: [
-      "Zero‑downtime blue/green releases",
+      "Zero-downtime blue/green releases",
       "Unit + integration tests in CI",
       "Cost <$50/month at pilot scale",
     ],
@@ -94,41 +112,50 @@ const PROJECTS = [
     id: "p5",
     title: "AKS Reliability: Pod Disruption Budgets + HPA + Keda",
     summary:
-      "Tuned autoscaling and rollouts for a noisy‑neighbor SaaS. Hardened ingress and added proactive capacity alerts.",
+      "Tuned autoscaling and rollouts for a noisy-neighbor SaaS. Hardened ingress and added proactive capacity alerts.",
     outcomes: [
       "Error rate ↓ 70% during deploys",
       "Throughput +28% at peak load",
-      "Stabilized PDB‑aware maintenance windows",
+      "Stabilized PDB-aware maintenance windows",
     ],
     tags: ["All", "Azure", "Kubernetes", "Observability"],
   },
   {
     id: "p6",
-    title: "Policy‑as‑Code Guardrails (OPA + Terraform + Azure Policy)",
+    title: "Policy-as-Code Guardrails (OPA + Terraform + Azure Policy)",
     summary:
       "Codified security & cost guardrails. Blocked public S3/Blob, enforced TLS, tagging, and backup policies across envs.",
     outcomes: [
-      "Prevented 100% of high‑risk misconfigs pre‑merge",
-      "Drift detection + auto‑remediation for 60+ rules",
-      "Audit‑ready evidence in minutes",
+      "Prevented 100% of high-risk misconfigs pre-merge",
+      "Drift detection + auto-remediation for 60+ rules",
+      "Audit-ready evidence in minutes",
     ],
     tags: ["All", "AWS", "Azure", "Terraform", "Security"],
   },
 ];
 
 // ---------- Case Studies (with PDF download) ----------
-const CASE_STUDIES = [
+type CaseStudy = {
+  id: string;
+  customer: string;
+  challenge: string;
+  approach: string;
+  impact: string[];
+  pdfUrl?: string;
+};
+
+const CASE_STUDIES: CaseStudy[] = [
   {
     id: "c1",
     customer: "Healthcare Analytics (HIPAA)",
     challenge:
       "Nightly ETL jobs overran, breaking 8am SLAs; costs spiking with orphaned EBS snapshots and oversized RDS.",
     approach:
-      "Instrumented end‑to‑end tracing, right‑sized RDS with Performance Insights, added snapshot lifecycle & S3 Glacier, created on‑call playbooks.",
+      "Instrumented end-to-end tracing, right-sized RDS with Performance Insights, added snapshot lifecycle & S3 Glacier, created on-call playbooks.",
     impact: [
       "SLA met 99.7% within 3 weeks",
       "Storage spend ↓ 33%",
-      "On‑call pages/week from 11 → 3",
+      "On-call pages/week from 11 → 3",
     ],
     pdfUrl: "/case-studies/case_study_healthcare_hipaa.pdf", // put PDFs in /public/case-studies/
   },
@@ -138,7 +165,7 @@ const CASE_STUDIES = [
     challenge:
       "Intermittent latency spikes on checkout API under bursty traffic; blue/green deploys caused brief error storms.",
     approach:
-      "Introduced canaries with step‑wise traffic, tuned autoscaling policies, optimized connection pooling, and set SLO‑driven alerts.",
+      "Introduced canaries with step-wise traffic, tuned autoscaling policies, optimized connection pooling, and set SLO-driven alerts.",
     impact: [
       "P95 latency ↓ 48%",
       "Zero failed deploys in 90 days",
@@ -149,7 +176,7 @@ const CASE_STUDIES = [
 ];
 
 // ---------- Skills ----------
-const SKILLS = [
+const SKILLS: string[] = [
   "Incident Management (ITIL)",
   "SRE Practices (SLO/SLA/SLE)",
   "Linux & Networking (TCP/IP, DNS, TLS)",
@@ -160,11 +187,11 @@ const SKILLS = [
   "Security (KMS, IAM, Secrets Mgmt)",
 ];
 
-const BADGES = ["AWS", "Azure", "GCP", "Kubernetes", "Terraform", "Python", "PowerShell", "Bash", "Git", "Prometheus", "OpenTelemetry"];
+const BADGES: string[] = ["AWS", "Azure", "GCP", "Kubernetes", "Terraform", "Python", "PowerShell", "Bash", "Git", "Prometheus", "OpenTelemetry"];
 
-const CERTS = [
+const CERTS: string[] = [
   "AWS Solutions Architect – Associate",
-  "Azure Administrator Associate (AZ‑104)",
+  "Azure Administrator Associate (AZ-104)",
   "Kubernetes Administrator (CKA)",
   "ITIL v4 Foundation",
 ];
@@ -172,7 +199,7 @@ const CERTS = [
 // =========================
 // ===== Components =========
 // =========================
-function Section({ id, title, children }) {
+function Section({ id, title, children }: React.PropsWithChildren<{ id?: string; title?: string }>) {
   return (
     <section id={id} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {title && (
@@ -183,7 +210,7 @@ function Section({ id, title, children }) {
   );
 }
 
-function KPI({ value, label }) {
+function KPI({ value, label }: { value: string; label: string }) {
   return (
     <div className="rounded-2xl border p-6 shadow-sm bg-white/60 backdrop-blur">
       <div className="text-3xl font-extrabold">{value}</div>
@@ -192,7 +219,7 @@ function KPI({ value, label }) {
   );
 }
 
-function Pill({ text, active, onClick }) {
+function Pill({ text, active, onClick }: { text: string; active?: boolean; onClick?: () => void }) {
   return (
     <button
       onClick={onClick}
@@ -205,7 +232,7 @@ function Pill({ text, active, onClick }) {
   );
 }
 
-function ProjectCard({ p }) {
+function ProjectCard({ p }: { p: Project }) {
   return (
     <div className="rounded-2xl border p-6 shadow-sm bg-white/70 backdrop-blur hover:shadow-md transition">
       <h3 className="text-xl font-semibold">{p.title}</h3>
@@ -235,7 +262,7 @@ function ProjectCard({ p }) {
   );
 }
 
-function CaseStudy({ c }) {
+function CaseStudy({ c }: { c: CaseStudy }) {
   return (
     <details className="rounded-2xl border p-6 shadow-sm bg-white/70 backdrop-blur">
       <summary className="cursor-pointer text-lg font-semibold flex justify-between items-center">
@@ -276,7 +303,7 @@ function CaseStudy({ c }) {
 // ========== App ==========
 // =========================
 export default function App() {
-  const [activeTag, setActiveTag] = useState("All");
+  const [activeTag, setActiveTag] = useState<Tag>("All");
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const filtered = useMemo(() => {
@@ -287,12 +314,16 @@ export default function App() {
   // Lock scroll when drawer open
   useEffect(() => {
     document.body.style.overflow = drawerOpen ? "hidden" : "";
-    return () => (document.body.style.overflow = "");
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [drawerOpen]);
 
   // Close on ESC
   useEffect(() => {
-    const onKey = (e) => e.key === "Escape" && setDrawerOpen(false);
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setDrawerOpen(false);
+    };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
@@ -311,11 +342,12 @@ export default function App() {
             <a href="#contact" className="hover:underline">Contact</a>
             <a href={PROFILE.resumeUrl} className="px-3 py-1.5 rounded-full border hover:shadow">Download Résumé</a>
           </nav>
-          {/* Mobile Hamburger */}
+          {/* Hamburger */}
           <button
             className="md:hidden flex flex-col gap-1.5"
             onClick={() => setDrawerOpen(true)}
             aria-label="Open navigation"
+			 title="Menu"
           >
             <span className="w-6 h-0.5 bg-gray-800"></span>
             <span className="w-6 h-0.5 bg-gray-800"></span>
@@ -332,7 +364,7 @@ export default function App() {
         <div className={`absolute inset-0 bg-black/30 transition-opacity ${drawerOpen ? "opacity-100" : "opacity-0"}`} />
       </div>
       <aside
-        className={`fixed right-0 top-0 h-full w-72 bg-white z-50 border-l shadow-xl transform transition-transform duration-300 ${
+        className={`fixed right-0 top-0 h-full w-72 md:w-96 bg-white z-50 border-l shadow-xl transform transition-transform duration-300 ${
           drawerOpen ? "translate-x-0" : "translate-x-full"
         }`}
         role="dialog"
@@ -360,10 +392,21 @@ export default function App() {
             <p className="mt-4 text-lg text-gray-700">{PROFILE.blurb}</p>
             <div className="mt-6 flex flex-wrap gap-3">
               <a href="#projects" className="px-4 py-2 rounded-xl bg-black text-white">View Projects</a>
-              <a href={PROFILE.linkedin} className="px-4 py-2 rounded-xl border">LinkedIn</a>
-              <a href={PROFILE.github} className="px-4 py-2 rounded-xl border">GitHub</a>
+              <a href={PROFILE.linkedin} className="px-4 py-2 rounded-xl border flex items-center gap-2">
+                <FaLinkedin className="text-blue-600" /> LinkedIn
+              </a>
+              <a href={PROFILE.github} className="px-4 py-2 rounded-xl border flex items-center gap-2">
+                <FaGithub className="text-gray-800" /> GitHub
+              </a>
             </div>
-            <div className="mt-4 text-sm text-gray-600">{PROFILE.location} • {PROFILE.email} • {PROFILE.phone}</div>
+            <div className="mt-4 text-sm text-gray-600 flex flex-col gap-1">
+              <div className="flex items-center gap-2"><FaEnvelope className="text-red-500" /> {PROFILE.email}</div>
+              <div className="flex items-center gap-2"><FaPhone className="text-green-600" /> {PROFILE.phone}</div>
+              <div>{PROFILE.location}</div>
+            </div>
+            <div className="mt-2 text-sm text-gray-500 italic flex items-center gap-2">
+              <FaUniversity className="text-indigo-600" /> 🎓 Education: {PROFILE.school}
+            </div>
           </div>
           <div className="md:col-span-2 grid grid-cols-2 gap-4">
             {METRICS.map((m, i) => (
@@ -427,17 +470,25 @@ export default function App() {
       {/* Contact */}
       <Section id="contact" title="Contact">
         <div className="rounded-2xl border p-8 bg-white/70 backdrop-blur">
-          <p className="text-gray-800">Interested in reliability audits, on‑call process improvements, or cost optimization workshops? I’m happy to help.</p>
+          <p className="text-gray-800">
+            Interested in reliability audits, on-call process improvements, or cost optimization workshops? I’m happy to help.
+          </p>
           <div className="mt-4 flex flex-wrap gap-3">
-            <a href={`mailto:${PROFILE.email}`} className="px-4 py-2 rounded-xl bg-black text-white">Email Me</a>
+            <a href={`mailto:${PROFILE.email}`} className="px-4 py-2 rounded-xl bg-black text-white flex items-center gap-2">
+              <FaEnvelope /> Email Me
+            </a>
             <a href={PROFILE.resumeUrl} className="px-4 py-2 rounded-xl border">Download Résumé</a>
-            <a href={PROFILE.linkedin} className="px-4 py-2 rounded-xl border">LinkedIn</a>
+            <a href={PROFILE.linkedin} className="px-4 py-2 rounded-xl border flex items-center gap-2">
+              <FaLinkedin /> LinkedIn
+            </a>
           </div>
         </div>
       </Section>
 
       {/* Footer */}
-      <footer className="py-10 text-center text-sm text-gray-600">© {new Date().getFullYear()} {PROFILE.name}. All rights reserved.</footer>
+      <footer className="py-10 text-center text-sm text-gray-600">
+        © {new Date().getFullYear()} {PROFILE.name}. All rights reserved.
+      </footer>
     </div>
   );
 }
