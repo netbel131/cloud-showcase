@@ -37,7 +37,7 @@ const EDUCATION = [
   },
   {
     degree: "B.A. in Software Engineering",
-    school: "Hilcoe SChool Of Computer Science and Technology ",
+    school: "HiLCoE School of Computer Science and Technology ",
     },
 ];
 // ---------- Hero KPIs ----------
