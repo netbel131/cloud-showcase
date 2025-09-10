@@ -399,10 +399,15 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           {/* Left: Resume + Name + Short Title */}
           <div className="flex items-center gap-3">
-            <a href={PROFILE.resumeUrl} className="flex items-center gap-1 px-2 py-1 rounded border text-xs hover:shadow">
-              <FaFileDownload className="text-gray-700" />
-              Résumé
-            </a>
+           <a
+  href={PROFILE.resumeUrl}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="px-3 py-1.5 rounded-full border hover:shadow flex items-center gap-2"
+>
+  <FaFileDownload className="text-gray-700" />
+  Download Résumé
+</a>
             <div className="flex flex-col">
               <a href="#home" className="font-bold tracking-tight">{PROFILE.name}</a>
               <span className="text-xs text-gray-600">Cloud Support Engineer</span>
@@ -456,11 +461,7 @@ export default function App() {
           >
             <FaFileDownload className="text-gray-700" /> Résumé
           </a>
-          <div className="mt-4 text-sm text-gray-600">
-			{PROFILE.location} • {PROFILE.email} • {PROFILE.phone}
-			<br />
-			🎓 {PROFILE.school}
-				</div>
+          
         </nav>
       </aside>
 
