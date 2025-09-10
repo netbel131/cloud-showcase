@@ -80,7 +80,7 @@ const METRICS: { label: string; value: string }[] = [
   name: "VMware Certified Professional – Data Center Virtualization (VCP-DCV)",
   icon: (
     <a
-      href="https://www.credly.com/badges/your-vmware-badge-id" // 🔗 replace with your actual Credly/VMware badge link
+      href="https://www.credly.com/badges/eb9ab32f-db8e-4891-bdc8-9dced9f3dedc/public_url" // 🔗 replace with your actual Credly/VMware badge link
       target="_blank"
       rel="noopener noreferrer"
       title="Click to verify on Credly"
