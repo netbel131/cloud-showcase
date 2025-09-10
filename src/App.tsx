@@ -1,9 +1,19 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { FaLinkedin, FaGithub, FaUniversity, FaEnvelope, FaPhone } from "react-icons/fa";
+import {
+  FaLinkedin,
+  FaGithub,
+  FaUniversity,
+  FaEnvelope,
+  FaPhone,
+  FaFileDownload,
+  FaAws,
+  FaCloud,
+  FaCogs,
+  FaShieldAlt, 
+} from "react-icons/fa";
 
-// =========================
-// Cloud Support Engineer — Showcase Site (App.tsx)
-// =========================
+// Simple Icons (only Azure here — no DevOps yet)
+import { SiMicrosoftazure, SiAzuredevops } from "react-icons/si";
 
 // ---------- Profile ----------
 const PROFILE = {
@@ -26,6 +36,98 @@ const METRICS: { label: string; value: string }[] = [
   { label: "Monthly Cost Savings", value: "$35K" },
   { label: "Incidents Resolved", value: "500+" },
   { label: "Change Success Rate", value: "99.5%" },
+];
+// ---------- certs ----------
+  const CERTS = [
+  {
+    name: "AWS Solutions Architect – Associate",
+    icon: (
+      <a
+        href="https://www.credly.com/badges/b4b654da-b465-4a24-8de9-a516cae39634/linked_in?t=srjwdj"
+        target="_blank"
+        rel="noopener noreferrer"
+        title="Click to verify on Credly"
+      >
+        <FaAws className="text-orange-500 text-xl hover:scale-110 transition-transform" />
+      </a>
+    ),
+  },
+  {
+    name: "Microsoft Certified: Azure Administrator Associate (AZ-104)",
+    icon: (
+      <FaCloud className="text-blue-600 text-xl" />
+    ), // ❗ no Credly link provided for Azure yet
+  },
+  {
+    name: "VMware Certified Professional – Data Center Virtualization (VCP-DCV)",
+    icon: (
+      <a
+        href="https://www.credly.com/badges/eb9ab32f-db8e-4891-bdc8-9dced9f3dedc/public_url"
+        target="_blank"
+        rel="noopener noreferrer"
+        title="Click to verify on Credly"
+      >
+        <FaCogs className="text-gray-700 text-xl hover:scale-110 transition-transform" />
+      </a>
+    ),
+  },
+  {
+    name: "CompTIA Security+",
+    icon: (
+      <a
+        href="https://www.credly.com/badges/c9e478cf-6301-4c85-8343-e0b58003c30d/public_url"
+        target="_blank"
+        rel="noopener noreferrer"
+        title="Click to verify on Credly"
+      >
+        <FaShieldAlt className="text-red-600 text-xl hover:scale-110 transition-transform" />
+      </a>
+    ),
+  },
+];
+
+// ---------- Academic Projects ----------
+type AcademicProject = {
+  id: string;
+  title: string;
+  summary: string;
+  outcomes?: string[];
+};
+
+const ACADEMIC_PROJECTS: AcademicProject[] = [
+  {
+    id: "a1",
+    title: "Cloud Transformation Analysis",
+    summary:
+      "Evaluated migration strategies for a mid-sized enterprise, including cost modeling, security controls, and compliance alignment.",
+    outcomes: [
+      "Applied NIST cloud definitions",
+      "Produced ROI report and TCO analysis",
+      "Mapped IAM roles to CIS Controls",
+    ],
+  },
+  {
+    id: "a2",
+    title: "Serverless Timesheet System (Capstone)",
+    summary:
+      "Designed a serverless employee timesheet system with AWS Lambda, API Gateway, DynamoDB, and S3.",
+    outcomes: [
+      "Built IaC with Terraform",
+      "Integrated monitoring with CloudWatch",
+      "Performed cost optimization testing",
+    ],
+  },
+  {
+    id: "a3",
+    title: "Cloud Cost Optimization Plan",
+    summary:
+      "Developed a structured cost optimization strategy across AWS services, focusing on compute, storage, and networking.",
+    outcomes: [
+      "Assessed cloud usage and identified cost drivers",
+      "Applied rightsizing, lifecycle policies, and reserved capacity",
+      "Achieved ~35% monthly savings with improved governance",
+    ],
+  },
 ];
 
 // ---------- Projects ----------
@@ -134,7 +236,7 @@ const PROJECTS: Project[] = [
   },
 ];
 
-// ---------- Case Studies (with PDF download) ----------
+// ---------- Case Studies ----------
 type CaseStudy = {
   id: string;
   customer: string;
@@ -157,7 +259,7 @@ const CASE_STUDIES: CaseStudy[] = [
       "Storage spend ↓ 33%",
       "On-call pages/week from 11 → 3",
     ],
-    pdfUrl: "/case-studies/case_study_healthcare_hipaa.pdf", // put PDFs in /public/case-studies/
+    pdfUrl: "/case-studies/case_study_healthcare_hipaa.pdf",
   },
   {
     id: "c2",
@@ -175,104 +277,39 @@ const CASE_STUDIES: CaseStudy[] = [
   },
 ];
 
-// ---------- Skills ----------
-const SKILLS: string[] = [
-  "Incident Management (ITIL)",
-  "SRE Practices (SLO/SLA/SLE)",
-  "Linux & Networking (TCP/IP, DNS, TLS)",
-  "Containers (Docker, K8s)",
-  "IaC (Terraform, CloudFormation)",
-  "CI/CD (GitHub Actions, Azure DevOps)",
-  "Observability (CloudWatch, Grafana, OpenSearch)",
-  "Security (KMS, IAM, Secrets Mgmt)",
-];
-
-const BADGES: string[] = ["AWS", "Azure", "GCP", "Kubernetes", "Terraform", "Python", "PowerShell", "Bash", "Git", "Prometheus", "OpenTelemetry"];
-
-const CERTS: string[] = [
-  "AWS Solutions Architect – Associate",
-  "Azure Administrator Associate (AZ-104)",
-  "Kubernetes Administrator (CKA)",
-  "ITIL v4 Foundation",
-];
-
-// =========================
-// ===== Components =========
-// =========================
+// ---------- UI Helpers ----------
 function Section({ id, title, children }: React.PropsWithChildren<{ id?: string; title?: string }>) {
   return (
     <section id={id} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      {title && (
-        <h2 className="text-2xl md:text-3xl font-bold tracking-tight mb-6">{title}</h2>
-      )}
+      {title && <h2 className="text-2xl md:text-3xl font-bold tracking-tight mb-6">{title}</h2>}
       {children}
     </section>
   );
 }
 
-function KPI({ value, label }: { value: string; label: string }) {
-  return (
-    <div className="rounded-2xl border p-6 shadow-sm bg-white/60 backdrop-blur">
-      <div className="text-3xl font-extrabold">{value}</div>
-      <div className="mt-1 text-sm text-gray-600">{label}</div>
-    </div>
-  );
-}
-
-function Pill({ text, active, onClick }: { text: string; active?: boolean; onClick?: () => void }) {
-  return (
-    <button
-      onClick={onClick}
-      className={`px-4 py-2 rounded-full border text-sm transition hover:shadow ${
-        active ? "bg-black text-white border-black" : "bg-white text-gray-800"
-      }`}
-    >
-      {text}
-    </button>
-  );
-}
-
-function ProjectCard({ p }: { p: Project }) {
+function ProjectCard({ p }: { p: { title: string; summary: string; outcomes?: string[] } }) {
   return (
     <div className="rounded-2xl border p-6 shadow-sm bg-white/70 backdrop-blur hover:shadow-md transition">
       <h3 className="text-xl font-semibold">{p.title}</h3>
       <p className="mt-2 text-gray-700">{p.summary}</p>
-      <ul className="list-disc pl-5 mt-3 space-y-1 text-gray-800">
-        {p.outcomes.map((o, i) => (
-          <li key={i}>{o}</li>
-        ))}
-      </ul>
-      <div className="mt-4 flex flex-wrap gap-2">
-        {p.tags.filter((t) => t !== "All").map((t, i) => (
-          <span key={i} className="px-2 py-1 text-xs rounded-full border bg-gray-50">
-            {t}
-          </span>
-        ))}
-      </div>
-      {p.links && (
-        <div className="mt-4 flex flex-wrap gap-3">
-          {p.links.map((l, i) => (
-            <a key={i} href={l.href} className="text-sm underline hover:no-underline">
-              {l.label}
-            </a>
+      {p.outcomes && (
+        <ul className="list-disc pl-5 mt-3 space-y-1 text-gray-800">
+          {p.outcomes.map((o, i) => (
+            <li key={i}>{o}</li>
           ))}
-        </div>
+        </ul>
       )}
     </div>
   );
 }
 
-function CaseStudy({ c }: { c: CaseStudy }) {
+function CaseStudyCard({ c }: { c: CaseStudy }) {
   return (
     <details className="rounded-2xl border p-6 shadow-sm bg-white/70 backdrop-blur">
       <summary className="cursor-pointer text-lg font-semibold flex justify-between items-center">
         <span>{c.customer}</span>
         {c.pdfUrl && (
-          <a
-            href={c.pdfUrl}
-            download
-            className="ml-4 text-sm px-3 py-1 rounded-full border hover:bg-gray-100"
-          >
+          <a href={c.pdfUrl} download className="ml-4 text-sm px-3 py-1 rounded-full border hover:bg-gray-100">
             Download PDF
           </a>
         )}
@@ -298,10 +335,16 @@ function CaseStudy({ c }: { c: CaseStudy }) {
     </details>
   );
 }
+function KPI({ value, label }: { value: string; label: string }) {
+  return (
+    <div className="rounded-2xl border p-6 shadow-sm bg-white/60 backdrop-blur">
+      <div className="text-3xl font-extrabold">{value}</div>
+      <div className="mt-1 text-sm text-gray-600">{label}</div>
+    </div>
+  );
+}
 
-// =========================
-// ========== App ==========
-// =========================
+// ---------- App ----------
 export default function App() {
   const [activeTag, setActiveTag] = useState<Tag>("All");
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -321,48 +364,51 @@ export default function App() {
 
   // Close on ESC
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setDrawerOpen(false);
-    };
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setDrawerOpen(false);
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 text-gray-900">
-      {/* Header / Nav */}
+      {/* Header with small Resume + short title + Hamburger */}
       <header className="sticky top-0 z-30 backdrop-blur bg-white/70 border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <a href="#home" className="font-bold tracking-tight">{PROFILE.name}</a>
-          {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-6 text-sm">
-            <a href="#projects" className="hover:underline">Projects</a>
-            <a href="#case-studies" className="hover:underline">Case Studies</a>
-            <a href="#skills" className="hover:underline">Skills</a>
-            <a href="#contact" className="hover:underline">Contact</a>
-            <a href={PROFILE.resumeUrl} className="px-3 py-1.5 rounded-full border hover:shadow">Download Résumé</a>
-          </nav>
-          {/* Hamburger */}
+          {/* Left: Resume + Name + Short Title */}
+          <div className="flex items-center gap-3">
+            <a href={PROFILE.resumeUrl} className="flex items-center gap-1 px-2 py-1 rounded border text-xs hover:shadow">
+              <FaFileDownload className="text-gray-700" />
+              Résumé
+            </a>
+            <div className="flex flex-col">
+              <a href="#home" className="font-bold tracking-tight">{PROFILE.name}</a>
+              <span className="text-xs text-gray-600">Cloud Support Engineer</span>
+            </div>
+          </div>
+
+          {/* Right: Hamburger */}
           <button
-            className="md:hidden flex flex-col gap-1.5"
+            className="flex flex-col gap-1.5 p-2 rounded-lg bg-white shadow-md hover:shadow-lg group"
             onClick={() => setDrawerOpen(true)}
             aria-label="Open navigation"
-			 title="Menu"
+            title="Menu"
           >
-            <span className="w-6 h-0.5 bg-gray-800"></span>
-            <span className="w-6 h-0.5 bg-gray-800"></span>
-            <span className="w-6 h-0.5 bg-gray-800"></span>
+            <span className="w-6 h-0.5 bg-gray-800 group-hover:bg-blue-600"></span>
+            <span className="w-6 h-0.5 bg-gray-800 group-hover:bg-blue-600"></span>
+            <span className="w-6 h-0.5 bg-gray-800 group-hover:bg-blue-600"></span>
           </button>
         </div>
       </header>
 
-      {/* Drawer + Overlay */}
+      {/* Overlay */}
       <div
         className={`fixed inset-0 z-40 transition ${drawerOpen ? "visible" : "invisible"}`}
         onClick={() => setDrawerOpen(false)}
       >
         <div className={`absolute inset-0 bg-black/30 transition-opacity ${drawerOpen ? "opacity-100" : "opacity-0"}`} />
       </div>
+
+      {/* Drawer (ALL navigation) */}
       <aside
         className={`fixed right-0 top-0 h-full w-72 md:w-96 bg-white z-50 border-l shadow-xl transform transition-transform duration-300 ${
           drawerOpen ? "translate-x-0" : "translate-x-full"
@@ -377,50 +423,85 @@ export default function App() {
         <nav className="p-4 flex flex-col gap-3 text-sm">
           <a href="#projects" onClick={() => setDrawerOpen(false)} className="px-3 py-2 rounded hover:bg-gray-50">Projects</a>
           <a href="#case-studies" onClick={() => setDrawerOpen(false)} className="px-3 py-2 rounded hover:bg-gray-50">Case Studies</a>
+          <a href="#academic-projects" onClick={() => setDrawerOpen(false)} className="px-3 py-2 rounded hover:bg-gray-50">Academic Projects</a>
           <a href="#skills" onClick={() => setDrawerOpen(false)} className="px-3 py-2 rounded hover:bg-gray-50">Skills</a>
           <a href="#contact" onClick={() => setDrawerOpen(false)} className="px-3 py-2 rounded hover:bg-gray-50">Contact</a>
-          <a href={PROFILE.resumeUrl} onClick={() => setDrawerOpen(false)} className="mt-2 px-3 py-2 rounded border text-center">Download Résumé</a>
-          <div className="mt-4 text-xs text-gray-500 px-3">{PROFILE.location} • {PROFILE.email}</div>
+          <a
+            href={PROFILE.resumeUrl}
+            onClick={() => setDrawerOpen(false)}
+            className="mt-2 px-3 py-2 rounded border text-center flex items-center gap-2 justify-center"
+          >
+            <FaFileDownload className="text-gray-700" /> Résumé
+          </a>
+          <div className="mt-4 text-xs text-gray-500 px-3">
+            {PROFILE.location} • {PROFILE.email}
+          </div>
         </nav>
       </aside>
 
       {/* Hero */}
-      <Section id="home">
-        <div className="grid md:grid-cols-5 gap-8 items-center">
-          <div className="md:col-span-3">
-            <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight">{PROFILE.title}</h1>
-            <p className="mt-4 text-lg text-gray-700">{PROFILE.blurb}</p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <a href="#projects" className="px-4 py-2 rounded-xl bg-black text-white">View Projects</a>
-              <a href={PROFILE.linkedin} className="px-4 py-2 rounded-xl border flex items-center gap-2">
-                <FaLinkedin className="text-blue-600" /> LinkedIn
-              </a>
-              <a href={PROFILE.github} className="px-4 py-2 rounded-xl border flex items-center gap-2">
-                <FaGithub className="text-gray-800" /> GitHub
-              </a>
-            </div>
-            <div className="mt-4 text-sm text-gray-600 flex flex-col gap-1">
-              <div className="flex items-center gap-2"><FaEnvelope className="text-red-500" /> {PROFILE.email}</div>
-              <div className="flex items-center gap-2"><FaPhone className="text-green-600" /> {PROFILE.phone}</div>
-              <div>{PROFILE.location}</div>
-            </div>
-            <div className="mt-2 text-sm text-gray-500 italic flex items-center gap-2">
-              <FaUniversity className="text-indigo-600" /> 🎓 Education: {PROFILE.school}
-            </div>
-          </div>
-          <div className="md:col-span-2 grid grid-cols-2 gap-4">
-            {METRICS.map((m, i) => (
-              <KPI key={i} value={m.value} label={m.label} />
-            ))}
-          </div>
-        </div>
-      </Section>
+     <Section id="home">
+  <div className="rounded-2xl border bg-white/80 backdrop-blur p-8 shadow-lg">
+    <div className="grid md:grid-cols-5 gap-8 items-center">
+      <div className="md:col-span-3">
+        <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">
+          Cloud Support Engineer
+          <br />
+          <span className="mt-2 flex justify-center md:justify-start items-center gap-6 text-2xl md:text-3xl text-gray-700">
+            <FaAws title="AWS" className="text-orange-500" />
+            <FaCloud title="Azure" className="text-blue-600" />
+            <FaCogs title="DevOps" className="text-indigo-600" />
+          </span>
+        </h1>
 
+        <p className="mt-4 text-lg text-gray-700">{PROFILE.blurb}</p>
+
+        <div className="mt-6 flex flex-wrap gap-3">
+          <a href="#projects" className="px-4 py-2 rounded-xl bg-black text-white">View Projects</a>
+          <a href={PROFILE.linkedin} className="px-4 py-2 rounded-xl border">LinkedIn</a>
+          <a href={PROFILE.github} className="px-4 py-2 rounded-xl border">GitHub</a>
+        </div>
+
+        <div className="mt-4 text-sm text-gray-600">
+          {PROFILE.location} • {PROFILE.email} • {PROFILE.phone}
+        </div>
+      </div>
+
+      <div className="md:col-span-2 grid grid-cols-2 gap-4">
+        {METRICS.map((m, i) => (
+          <KPI key={i} value={m.value} label={m.label} />
+        ))}
+      </div>
+    </div>
+  </div>
+</Section>
+
+	  {/* certs */}
+<Section id="skills" title="Certifications">
+  <div className="rounded-2xl border p-6 bg-white/70 backdrop-blur">
+    <ul className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3">
+      {CERTS.map((c, i) => (
+        <li key={i} className="flex items-center gap-2 text-gray-800">
+          {c.icon}
+          <span>{c.name}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Section>
       {/* Projects */}
       <Section id="projects" title="Projects & Playbooks">
         <div className="flex flex-wrap gap-2 mb-6">
           {TAGS.map((t) => (
-            <Pill key={t} text={t} active={activeTag === t} onClick={() => setActiveTag(t)} />
+            <button
+              key={t}
+              onClick={() => setActiveTag(t)}
+              className={`px-4 py-2 rounded-full border text-sm transition hover:shadow ${
+                activeTag === t ? "bg-black text-white border-black" : "bg-white text-gray-800"
+              }`}
+            >
+              {t}
+            </button>
           ))}
         </div>
         <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
@@ -434,57 +515,20 @@ export default function App() {
       <Section id="case-studies" title="Case Studies">
         <div className="grid md:grid-cols-2 gap-6">
           {CASE_STUDIES.map((c) => (
-            <CaseStudy key={c.id} c={c} />
+            <CaseStudyCard key={c.id} c={c} />
           ))}
         </div>
       </Section>
 
-      {/* Skills */}
-      <Section id="skills" title="Skills & Tools">
-        <div className="grid md:grid-cols-2 gap-8">
-          <div className="rounded-2xl border p-6 bg-white/70 backdrop-blur">
-            <h3 className="font-semibold">Core Skills</h3>
-            <ul className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2">
-              {SKILLS.map((s, i) => (
-                <li key={i} className="text-gray-800">• {s}</li>
-              ))}
-            </ul>
-          </div>
-          <div className="rounded-2xl border p-6 bg-white/70 backdrop-blur">
-            <h3 className="font-semibold">Stacks & Platforms</h3>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {BADGES.map((b, i) => (
-                <span key={i} className="px-3 py-1.5 rounded-full border bg-gray-50 text-sm">{b}</span>
-              ))}
-            </div>
-            <h3 className="mt-6 font-semibold">Certifications</h3>
-            <ul className="mt-3 space-y-1">
-              {CERTS.map((c, i) => (
-                <li key={i} className="text-gray-800">• {c}</li>
-              ))}
-            </ul>
-          </div>
+      {/* Academic Projects */}
+      <Section id="academic-projects" title="Academic Projects">
+        <div className="grid md:grid-cols-2 gap-6">
+          {ACADEMIC_PROJECTS.map((p) => (
+            <ProjectCard key={p.id} p={p} />
+          ))}
         </div>
       </Section>
-
-      {/* Contact */}
-      <Section id="contact" title="Contact">
-        <div className="rounded-2xl border p-8 bg-white/70 backdrop-blur">
-          <p className="text-gray-800">
-            Interested in reliability audits, on-call process improvements, or cost optimization workshops? I’m happy to help.
-          </p>
-          <div className="mt-4 flex flex-wrap gap-3">
-            <a href={`mailto:${PROFILE.email}`} className="px-4 py-2 rounded-xl bg-black text-white flex items-center gap-2">
-              <FaEnvelope /> Email Me
-            </a>
-            <a href={PROFILE.resumeUrl} className="px-4 py-2 rounded-xl border">Download Résumé</a>
-            <a href={PROFILE.linkedin} className="px-4 py-2 rounded-xl border flex items-center gap-2">
-              <FaLinkedin /> LinkedIn
-            </a>
-          </div>
-        </div>
-      </Section>
-
+	  
       {/* Footer */}
       <footer className="py-10 text-center text-sm text-gray-600">
         © {new Date().getFullYear()} {PROFILE.name}. All rights reserved.
