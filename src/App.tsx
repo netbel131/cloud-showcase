@@ -9,6 +9,7 @@ import {
   FaAws,
   FaCloud,
   FaCogs,
+  FaMapMarkerAlt,
   FaShieldAlt, 
 } from "react-icons/fa";
 
@@ -488,9 +489,21 @@ export default function App() {
           <a href={PROFILE.github} className="px-4 py-2 rounded-xl border">GitHub</a>
         </div>
 
-        <div className="mt-4 text-sm text-gray-600">
-          {PROFILE.location} • {PROFILE.email} • {PROFILE.phone}
-        </div>
+<div className="mt-4 flex flex-wrap items-center gap-6 text-sm text-gray-600">
+  <div className="flex items-center gap-2">
+    <FaMapMarkerAlt className="text-red-500" />
+    <span>{PROFILE.location}</span>
+  </div>
+  <div className="flex items-center gap-2">
+    <FaEnvelope className="text-blue-500" />
+    <a href={`mailto:${PROFILE.email}`} className="hover:underline">{PROFILE.email}</a>
+  </div>
+  <div className="flex items-center gap-2">
+    <FaPhone className="text-green-500" />
+    <a href={`tel:${PROFILE.phone}`} className="hover:underline">{PROFILE.phone}</a>
+  </div>
+</div>
+
       </div>
 
       <div className="md:col-span-2 grid grid-cols-2 gap-4">
