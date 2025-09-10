@@ -406,7 +406,7 @@ export default function App() {
   className="px-3 py-1.5 rounded-full border hover:shadow flex items-center gap-2"
 >
   <FaFileDownload className="text-gray-700" />
-  Download Résumé
+  Download Resume
 </a>
             <div className="flex flex-col">
               <a href="#home" className="font-bold tracking-tight">{PROFILE.name}</a>
@@ -459,7 +459,7 @@ export default function App() {
             onClick={() => setDrawerOpen(false)}
             className="mt-2 px-3 py-2 rounded border text-center flex items-center gap-2 justify-center"
           >
-            <FaFileDownload className="text-gray-700" /> Résumé
+            <FaFileDownload className="text-gray-700" /> Resume
           </a>
           
         </nav>
