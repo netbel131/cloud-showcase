@@ -17,19 +17,29 @@ import { SiMicrosoftazure, SiAzuredevops } from "react-icons/si";
 
 // ---------- Profile ----------
 const PROFILE = {
-  name: "Your Name",
+  name: "Netsanet T",
   title: "Cloud Support Engineer | AWS • Azure • DevOps",
   blurb:
     "I keep production systems resilient, observable, and cost-efficient. I troubleshoot incidents, automate fixes, and turn metrics into action.",
   location: "Alexandria, VA",
-  email: "you@example.com",
-  phone: "+1 (555) 123-4567",
-  linkedin: "https://www.linkedin.com/in/yourprofile",
-  github: "https://github.com/yourhandle",
+  email: "netsanet@netbel.solutions",
+  phone: "(301) 968 5249",
+  linkedin: "https://www.linkedin.com/in/netbel",
+  github: "https://github.com/netbel131",
   resumeUrl: "#", // replace with your resume link
-  school: "Your University (Placeholder)",
-};
-
+  };
+// ---------- Education ----------
+const EDUCATION = [
+  {
+    degree: "Master’s in Cloud Computing (In Progress)",
+    school: "University of Maryland Global Campus",
+    year: "Expected 2026",
+  },
+  {
+    degree: "B.A. in Software Engineering",
+    school: "Hilcoe SChool Of Computer Science and Technology ",
+    },
+];
 // ---------- Hero KPIs ----------
 const METRICS: { label: string; value: string }[] = [
   { label: "MTTR Improvement", value: "↓ 42%" },
@@ -65,20 +75,25 @@ const METRICS: { label: string; value: string }[] = [
     </a>
   ),
 },
+{
+  name: "VMware Certified Professional – Data Center Virtualization (VCP-DCV)",
+  icon: (
+    <a
+      href="https://www.credly.com/badges/your-vmware-badge-id" // 🔗 replace with your actual Credly/VMware badge link
+      target="_blank"
+      rel="noopener noreferrer"
+      title="Click to verify on Credly"
+    >
+      <img
+        src="https://1000logos.net/wp-content/uploads/2020/09/VMware-Logo.png"
+        alt="VMware"
+        className="w-12 h-auto"
+      />
+    </a>
+  ),
+},
 
-  {
-    name: "VMware Certified Professional – Data Center Virtualization (VCP-DCV)",
-    icon: (
-      <a
-        href="https://www.credly.com/badges/eb9ab32f-db8e-4891-bdc8-9dced9f3dedc/public_url"
-        target="_blank"
-        rel="noopener noreferrer"
-        title="Click to verify on Credly"
-      >
-        <FaCogs className="text-gray-700 text-xl hover:scale-110 transition-transform" />
-      </a>
-    ),
-  },
+  
   {
     name: "CompTIA Security+",
     icon: (
@@ -441,9 +456,11 @@ export default function App() {
           >
             <FaFileDownload className="text-gray-700" /> Résumé
           </a>
-          <div className="mt-4 text-xs text-gray-500 px-3">
-            {PROFILE.location} • {PROFILE.email}
-          </div>
+          <div className="mt-4 text-sm text-gray-600">
+			{PROFILE.location} • {PROFILE.email} • {PROFILE.phone}
+			<br />
+			🎓 {PROFILE.school}
+				</div>
         </nav>
       </aside>
 
@@ -483,6 +500,23 @@ export default function App() {
     </div>
   </div>
 </Section>
+{/* education */}
+<Section id="education" title="Education">
+  <div className="rounded-2xl border p-6 bg-white/70 backdrop-blur">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {EDUCATION.map((edu, i) => (
+        <div key={i} className="flex items-start gap-3">
+          <FaUniversity className="text-indigo-600 text-xl mt-1" />
+          <div className="flex flex-col">
+            <div className="font-semibold">{edu.degree}</div>
+            <div className="text-gray-700">{edu.school}</div>
+            <div className="text-sm text-gray-500">{edu.year}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</Section>
 
 	  {/* certs */}
 <Section id="skills" title="Certifications">
@@ -518,7 +552,7 @@ export default function App() {
           ))}
         </div>
       </Section>
-
+	  
       {/* Case Studies */}
       <Section id="case-studies" title="Case Studies">
         <div className="grid md:grid-cols-2 gap-6">
@@ -538,9 +572,12 @@ export default function App() {
       </Section>
 	  
       {/* Footer */}
-      <footer className="py-10 text-center text-sm text-gray-600">
-        © {new Date().getFullYear()} {PROFILE.name}. All rights reserved.
-      </footer>
+      <footer className="mt-12 border-t pt-6 text-center text-sm text-gray-600">
+  <p>© {new Date().getFullYear()} {PROFILE.name}. All rights reserved.</p>
+  <p className="mt-2">
+    Built with <span className="font-semibold">React & Tailwind CSS</span>
+  </p>
+</footer>
     </div>
   );
 }
