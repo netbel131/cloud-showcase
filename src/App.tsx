@@ -53,11 +53,19 @@ const METRICS: { label: string; value: string }[] = [
     ),
   },
   {
-    name: "Microsoft Certified: Azure Administrator Associate (AZ-104)",
-    icon: (
-      <FaCloud className="text-blue-600 text-xl" />
-    ), // ❗ no Credly link provided for Azure yet
-  },
+  name: "Microsoft Certified: Azure Administrator Associate (AZ-104)",
+  icon: (
+    <a
+      href="https://learn.microsoft.com/api/credentials/share/en-us/NetsanetTirfea-3017/45E4D4877961C0E1?sharingId=8571916607DB183E"
+      target="_blank"
+      rel="noopener noreferrer"
+      title="Click to verify on Microsoft"
+    >
+      <FaCloud className="text-blue-600 text-xl hover:scale-110 transition-transform" />
+    </a>
+  ),
+},
+
   {
     name: "VMware Certified Professional – Data Center Virtualization (VCP-DCV)",
     icon: (
