@@ -41,6 +41,7 @@ and deliver scalable cloud solutions. I’m passionate about learning, automatio
 high-performing systems that meet business needs.
 `;
 	  
+// ---------- visitor count ----------
 // ---------- Education ----------
 
   const EDUCATION = [
@@ -381,7 +382,79 @@ function KPI({ value, label }: { value: string; label: string }) {
     </div>
   );
 }
+// ---------- visitor ocunt ----------
+function VisitorCounter() {
+  const [visits, setVisits] = React.useState<number | null>(null);
 
+  // 🔧 Edit these to something unique to YOUR site
+  const NAMESPACE = "netbel-portfolio"; // e.g. "cloud-showcase" or your domain
+  const KEY = "visits";
+
+  React.useEffect(() => {
+    let cancelled = false;
+
+    async function load() {
+      try {
+        // Try CountAPI (query params form)
+        const url1 = `https://api.countapi.xyz/hit?namespace=${encodeURIComponent(
+          NAMESPACE
+        )}&key=${encodeURIComponent(KEY)}`;
+
+        // Also try CountAPI (path form) as a fallback
+        const url2 = `https://api.countapi.xyz/hit/${encodeURIComponent(
+          NAMESPACE
+        )}/${encodeURIComponent(KEY)}`;
+
+        const tryFetch = async (url: string) => {
+          const res = await fetch(url, { cache: "no-store" });
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          const data = await res.json();
+          if (typeof data.value === "number") return data.value as number;
+          throw new Error("No numeric 'value' in response");
+        };
+
+        let value: number | null = null;
+        try {
+          value = await tryFetch(url1);
+        } catch (e1) {
+          console.warn("CountAPI primary failed:", e1);
+          try {
+            value = await tryFetch(url2);
+          } catch (e2) {
+            console.warn("CountAPI fallback failed:", e2);
+          }
+        }
+
+        // If CountAPI worked
+        if (!cancelled && typeof value === "number") {
+          setVisits(value);
+          return;
+        }
+
+        // Fallback: localStorage (per-browser)
+        const stored = Number(localStorage.getItem("visits") || "0") + 1;
+        localStorage.setItem("visits", String(stored));
+        if (!cancelled) setVisits(stored);
+      } catch (err) {
+        console.error("Visitor counter error:", err);
+        const stored = Number(localStorage.getItem("visits") || "0") + 1;
+        localStorage.setItem("visits", String(stored));
+        if (!cancelled) setVisits(stored);
+      }
+    }
+
+    load();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+const displayCount = visits !== null ? visits + 10000 : "—";
+  return (
+    <div className="text-sm text-gray-600 mt-2">
+      👀 Visitor count: {visits !== null ? visits : "…"}
+    </div>
+  );
+} 
 // ---------- App ----------
 export default function App() {
   const [activeTag, setActiveTag] = useState<Tag>("All");
@@ -391,6 +464,7 @@ export default function App() {
     if (activeTag === "All") return PROJECTS;
     return PROJECTS.filter((p) => p.tags.includes(activeTag));
   }, [activeTag]);
+  
 
   // Lock scroll when drawer open
   useEffect(() => {
@@ -689,6 +763,7 @@ export default function App() {
   <p className="mt-2">
     Built with <span className="font-semibold">React & Tailwind CSS</span>
   </p>
+  <VisitorCounter />
 </footer>
     </div>
   );
