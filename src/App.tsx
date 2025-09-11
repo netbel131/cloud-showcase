@@ -538,8 +538,8 @@ export default function App() {
    <div className="rounded-2xl border p-6 bg-white/70 backdrop-blur">
     <p className="text-gray-700 leading-relaxed">
       I bring over <span className="font-semibold">15 years of IT experience</span>, beginning my career 
-      as a <span className="font-medium">Network and Systems Engineer</span> working with Cisco, VMware, 
-      Windows, and Linux environments. In that role, I gained strong foundations in infrastructure, 
+      as a <span className="font-medium">Network and Systems Engineer</span> working with Cisco, VMware and  
+      Windows environments. In that role, I gained strong foundations in infrastructure, 
       troubleshooting, and keeping mission-critical systems resilient.
     </p>
     <p className="text-gray-700 leading-relaxed mt-4">
