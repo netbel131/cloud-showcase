@@ -16,6 +16,7 @@ import {
 // Simple Icons (only Azure here — no DevOps yet)
 import { SiMicrosoftazure, SiAzuredevops } from "react-icons/si";
 
+
 // ---------- Profile ----------
 const PROFILE = {
   name: "Netsanet T",
@@ -29,6 +30,17 @@ const PROFILE = {
   github: "https://github.com/netbel131",
   resumeUrl: "#", // replace with your resume link
   };
+// ---------- aboutme ----------
+const ABOUT_ME = `
+I’m a Cloud & DevOps Engineer with hands-on experience in AWS, Azure, Kubernetes, Terraform, 
+and automation tools. I specialize in keeping systems reliable, secure, and cost-efficient 
+while streamlining operations with observability and infrastructure as code.
+
+My background has honed my ability to solve problems under pressure, collaborate across teams, 
+and deliver scalable cloud solutions. I’m passionate about learning, automation, and creating 
+high-performing systems that meet business needs.
+`;
+	  
 // ---------- Education ----------
 const EDUCATION = [
   {
@@ -300,7 +312,6 @@ const CASE_STUDIES: CaseStudy[] = [
     pdfUrl: "/case-studies/case_study_fintech_payments.pdf",
   },
 ];
-
 // ---------- UI Helpers ----------
 function Section({ id, title, children }: React.PropsWithChildren<{ id?: string; title?: string }>) {
   return (
@@ -456,6 +467,13 @@ export default function App() {
           <a href="#skills" onClick={() => setDrawerOpen(false)} className="px-3 py-2 rounded hover:bg-gray-50">Skills</a>
           <a href="#contact" onClick={() => setDrawerOpen(false)} className="px-3 py-2 rounded hover:bg-gray-50">Contact</a>
           <a
+  href="#about"
+  onClick={() => setDrawerOpen(false)}
+  className="px-3 py-2 rounded hover:bg-gray-50"
+>
+  About Me
+</a>
+<a
             href={PROFILE.resumeUrl}
             onClick={() => setDrawerOpen(false)}
             className="mt-2 px-3 py-2 rounded border text-center flex items-center gap-2 justify-center"
@@ -514,6 +532,68 @@ export default function App() {
     </div>
   </div>
 </Section>
+{/* about */}
+{/* ---------- About Me ---------- */}
+<Section id="about" title="About Me">
+   <div className="rounded-2xl border p-6 bg-white/70 backdrop-blur">
+    <p className="text-gray-700 leading-relaxed">
+      I bring over <span className="font-semibold">15 years of IT experience</span>, beginning my career 
+      as a <span className="font-medium">Network and Systems Engineer</span> working with Cisco, VMware, 
+      Windows, and Linux environments. In that role, I gained strong foundations in infrastructure, 
+      troubleshooting, and keeping mission-critical systems resilient.
+    </p>
+    <p className="text-gray-700 leading-relaxed mt-4">
+      Over time, I made a deliberate <span className="font-semibold">transition into Cloud & DevOps</span>, 
+      building on my background to embrace AWS, Azure, Kubernetes, Terraform, and automation practices. 
+      This journey has allowed me to bridge legacy IT with modern cloud architectures, bringing both 
+      depth of operational knowledge and agility in new technologies.
+    </p>
+    <p className="text-gray-700 leading-relaxed mt-4">
+      Today, I specialize in <span className="font-medium">cloud support engineering</span> — improving 
+      reliability, optimizing costs, and automating workflows. My goal is to apply both my traditional 
+      infrastructure expertise and cloud skillset to help organizations scale securely and efficiently.
+    </p>
+
+    {/* Highlights in two columns */}
+    <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <h3 className="font-semibold text-gray-900">What I Do</h3>
+        <ul className="mt-2 list-disc pl-5 space-y-1 text-gray-800">
+          <li>Incident response playbooks (Sev-1→Sev-3) with auto-remediation</li>
+          <li>Observability: metrics, logs, traces mapped to SLOs</li>
+          <li>Cost optimization: rightsizing, storage lifecycle, reserved capacity</li>
+          <li>Infrastructure as Code with Terraform & pipelines</li>
+        </ul>
+      </div>
+      <div>
+        <h3 className="font-semibold text-gray-900">How I Work</h3>
+        <ul className="mt-2 list-disc pl-5 space-y-1 text-gray-800">
+          <li>Root-cause mindset, calm under pressure</li>
+          <li>Clear documentation and handoffs</li>
+          <li>Security-first guardrails and policy-as-code</li>
+          <li>Continuous learning & incremental improvements</li>
+        </ul>
+      </div>
+    </div>
+
+    {/* Tech “chips” */}
+    <div className="mt-6">
+      <h3 className="font-semibold text-gray-900">Tooling I Use</h3>
+      <div className="mt-3 flex flex-wrap gap-2">
+        {[
+          "AWS", "Azure", "Kubernetes", "Terraform",
+          "CloudWatch", "Grafana", "OpenSearch",
+          "GitHub Actions", "Azure DevOps", "Python", "Bash"
+        ].map((t) => (
+          <span key={t} className="px-3 py-1.5 rounded-full border bg-gray-50 text-sm text-gray-700">
+            {t}
+          </span>
+        ))}
+      </div>
+    </div>
+  </div>
+</Section>
+
 {/* education */}
 <Section id="education" title="Education">
   <div className="rounded-2xl border p-6 bg-white/70 backdrop-blur">
