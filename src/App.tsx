@@ -132,7 +132,7 @@ const ACADEMIC_PROJECTS: AcademicProject[] = [
   },
   {
     id: "a2",
-    title: "Serverless Timesheet System (Capstone)",
+    title: "Serverless Timesheet System",
     summary:
       "Designed a serverless employee timesheet system with AWS Lambda, API Gateway, DynamoDB, and S3.",
     outcomes: [
