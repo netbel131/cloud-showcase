@@ -42,7 +42,8 @@ high-performing systems that meet business needs.
 `;
 	  
 // ---------- Education ----------
-const EDUCATION = [
+
+  const EDUCATION = [
   {
     degree: "Master’s in Cloud Computing (In Progress)",
     school: "University of Maryland Global Campus",
@@ -50,8 +51,10 @@ const EDUCATION = [
   },
   {
     degree: "B.A. in Software Engineering",
-    school: "HiLCoE School of Computer Science and Technology ",
-    },
+    school: "Unity University",
+    year: "2016",
+    credly: "https://www.credly.com/badges/3d1c0224-f9db-4ab9-aae6-21630dd13521/public_url",
+  },
 ];
 // ---------- Hero KPIs ----------
 const METRICS: { label: string; value: string }[] = [
@@ -600,11 +603,26 @@ export default function App() {
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {EDUCATION.map((edu, i) => (
         <div key={i} className="flex items-start gap-3">
-          <FaUniversity className="text-indigo-600 text-xl mt-1" />
+          {/* Logo column: clickable if credly exists */}
+          {edu.credly ? (
+            <a
+              href={edu.credly}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Click to verify on Credly"
+              aria-label={`Verify ${edu.degree} on Credly`}
+            >
+              <FaUniversity className="text-blue-600 text-xl hover:text-blue-800 cursor-pointer" />
+            </a>
+          ) : (
+            <FaUniversity className="text-indigo-600 text-xl" />
+          )}
+
+          {/* Text column */}
           <div className="flex flex-col">
             <div className="font-semibold">{edu.degree}</div>
             <div className="text-gray-700">{edu.school}</div>
-            <div className="text-sm text-gray-500">{edu.year}</div>
+            {edu.year && <div className="text-sm text-gray-500">{edu.year}</div>}
           </div>
         </div>
       ))}
