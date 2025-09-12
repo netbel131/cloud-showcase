@@ -611,8 +611,26 @@ export default function App() {
 </Section>
 {/* about */}
 {/* ---------- About Me ---------- */}
-<Section id="about" title="About Me">
-   <div className="rounded-2xl border p-6 bg-white/70 backdrop-blur">
+<Section id="about" title="">
+  {/* Heading row: image + text on the same line */}
+  <div className="flex items-center gap-3 mb-4">
+    <h2 className="text-2xl md:text-3xl font-bold flex items-center">
+	About Me &nbsp;
+      <a
+        href="https://www.linkedin.com/in/netbel"  
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img
+          src="/profile.jpg"
+          alt="Profile"
+          className="w-10 h-10 rounded-full border shadow mr-2 hover:opacity-80 transition"
+          title="Click to view my LinkedIn"
+        />
+      </a>
+      
+    </h2>
+  </div>
     <p className="text-gray-700 leading-relaxed">
       I bring over <span className="font-semibold">15 years of IT experience</span>, beginning my career 
       as a <span className="font-medium">Network and Systems Engineer</span> working with Cisco, VMware and  
@@ -668,7 +686,7 @@ export default function App() {
         ))}
       </div>
     </div>
-  </div>
+ 
 </Section>
 
 {/* education */}
